@@ -54,9 +54,12 @@ export const TestLocation = observer(({ index, onRemove, onSaveLocation }: TestL
     onSaveLocation(newEntry);
   };
 
+  const selectedLocationName =
+    store.locations.find((location) => location.locationID === selectedLocationID)?.name || "Новая локация";
+
   return (
     <div className="form">
-      <h2>Тестовая локация {index + 1}</h2>
+      <h2>Тестовая локация: {selectedLocationName}</h2>
       <div className="wrapper">
         <Select
           options={store.locations.map((location) => ({
@@ -82,12 +85,12 @@ export const TestLocation = observer(({ index, onRemove, onSaveLocation }: TestL
           placeholder="Выберите среду"
         />
 
-        {availableServers.length > 0 && (
-          <div className="servers">
-            <p className="name">Cерверы:</p>
+        <div className="servers">
+          <p className="name">Cерверы:</p>
+          {availableServers.length > 0 && (
             <p className="servers-name">{availableServers.map(({ name }) => name).join(", ")}</p>
-          </div>
-        )}
+          )}
+        </div>
 
         <button className="remove-button" onClick={onRemove}>
           <FontAwesomeIcon icon={faTrashAlt} />
